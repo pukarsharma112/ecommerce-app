@@ -1,0 +1,163 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  avatar   String
+  password String
+
+  carts    Cart[]
+  orders   Order[]
+  wishlist Wishlist[]
+  invoices  Invoice[]
+
+  @@map("users")
+}
+
+model Cart {
+  id        String         @id @default(cuid())
+  userId    String         @map("user_id")
+  productId String         @map("product_id")
+  colors    ProductColor[]
+  sizes     ProductSize[]
+  quantity  Int
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("carts")
+}
+
+model Wishlist {
+  id        String @id @default(cuid())
+  userId    String @map("user_id")
+  productId String @map("product_id")
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@map("wishlist")
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  userId    String @map("user_id")
+  productId String @map("product_id")
+  invoiceId String @map("invoice_id")
+
+  quantity Int
+  total    Float
+  discount Float?
+  colors   ProductColor[]
+  sizes    ProductSize[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+
+  @@map("orders")
+}
+
+model Invoice {
+  id String @id @default(cuid())
+
+  userId String  @map("user_id")
+  paymentMethod  String?
+  paid           Boolean @default(false)
+  stripeId       String?
+
+  total Float
+  status  String @default("processing")
+
+  user   User    @relation(fields: [userId], references: [id])
+  orders  Order[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("invoices")
+}
+
+// model Collection {
+//   id       String       @id @default(cuid())
+//   title    String
+//   slug     String       @unique
+//   parentId String?
+//   parent   Collection?  @relation(name: "ParentChild", fields: [parentId], references: [id])
+//   children Collection[] @relation(name: "ParentChild")
+//   imageUrl String
+//   products Product[]
+
+//   @@map("collections")
+// }
+
+model Product {
+  id          String         @id @default(cuid())
+  title       String
+  description String
+  price       Float
+  discount    Float?
+  images      ProductImage[]
+  colors      ProductColor[]
+  sizes       ProductSize[]
+  quantity    Int
+  tags        String
+  ratings     Float
+
+  // @@fulltext([title])
+  Cart     Cart[]
+  Wishlist Wishlist[]
+  Order    Order[]
+
+  @@map("products")
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+
+  @@map("product_images")
+}
+
+model ProductSize {
+  id        Int      @id @default(autoincrement())
+  size      String
+  // quantity  Int
+  available Boolean  @default(true)
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+  Cart      Cart?    @relation(fields: [cartId], references: [id])
+  cartId    String?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
+
+  @@map("product_sizes")
+}
+
+model ProductColor {
+  id        Int      @id @default(autoincrement())
+  color     String
+  // quantity  Int
+  available Boolean  @default(true)
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+  Cart      Cart?    @relation(fields: [cartId], references: [id])
+  cartId    String?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
+
+  @@map("product_colors")
+}

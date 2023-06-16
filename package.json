@@ -1,0 +1,61 @@
+{
+  "name": "@fullstacks/ecommerce",
+  "version": "1.0.1",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "node prisma/seed/index.js"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint --fix src/**/*.{js,svelte} --ignore-path .gitignore",
+    "format": "prettier -w src/**/*.{js,svelte} --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.1",
+    "@prisma/client": "^4.15.0",
+    "argon2": "^0.30.3",
+    "clsx": "^1.2.1",
+    "nprogress": "^0.2.0",
+    "sveltekit-flash-message": "^1.0.0",
+    "sveltekit-superforms": "^1.0.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@iconify-json/bi": "^1.1.17",
+    "@iconify-json/heroicons": "^1.1.11",
+    "@iconify-json/svg-spinners": "^1.1.1",
+    "@julr/unocss-preset-forms": "^0.0.5",
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.5.0",
+    "@unocss/reset": "^0.53.1",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte": "^2.26.0",
+    "prettier": "^2.8.0",
+    "prettier-plugin-svelte": "^2.8.1",
+    "prisma": "^4.15.0",
+    "svelte": "^3.54.0",
+    "unocss": "^0.53.1",
+    "vite": "^4.3.0"
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 100,
+    "trailingComma": "none",
+    "bracketSameLine": true,
+    "plugins": [
+      "prettier-plugin-svelte"
+    ]
+  },
+  "lint-staged": {
+    "*.js(x),svelte": [
+      "eslint --fix --ignore-path .gitignore"
+    ],
+    "*": "prettier -w --ignore-path .gitignore --ignore-unknown"
+  }
+}
