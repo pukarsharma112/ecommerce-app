@@ -11,7 +11,7 @@
   export let isModalView = false;
   export let hideDeleteCart = false;
 
-  const shipping = userCart?.length ? 14.34 : 0;
+  export let shippingCharge;
 
   $: subtotal = userCart.reduce((acc, current) => {
     const quantity = current.quantity;
@@ -94,7 +94,7 @@
   {:else}
     <div class="inline-flex items-center w-full justify-between text-base text-gray-900 px-4 py-1">
       <p>Shipping</p>
-      <p class="font-medium">${shipping}</p>
+      <p class="font-medium">${shippingCharge}</p>
     </div>
 
     <!-- <div class="inline-flex items-center w-full justify-between text-base text-gray-900 px-4 py-1">
@@ -110,7 +110,7 @@
     <div class="inline-flex items-center w-full text-base text-gray-900 px-4 py-2">
       <div class="w-full inline-flex items-center w-full justify-between border-t pt-2">
         <p>Total</p>
-        <p class="font-medium">${subtotal + shipping}</p>
+        <p class="font-medium">${subtotal + shippingCharge}</p>
       </div>
     </div>
 

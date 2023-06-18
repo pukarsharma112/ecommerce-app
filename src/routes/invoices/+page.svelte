@@ -57,14 +57,13 @@
               class={clsx("inline-flex items-center", {
                 "text-green-500": invoice.paid,
                 "text-red-400": !invoice.paid
-              })}
-              title={invoice.paid ? "Paid." : "Not paid."}>
+              })}>
               <i
                 class={clsx({
                   "i-heroicons-banknotes": invoice.paymentMethod === "cash-on-delivery",
                   "i-heroicons-credit-card": invoice.paymentMethod === "pay-with-stripe"
                 })} />
-              <p class="ml-2 text-sm font-medium">{invoice.paymentMethod?.replaceAll("-", " ")}</p>
+              <span class="text-sm font-medium ml-2">{invoice.paid ? "Paid" : "Not paid"}</span>
             </div>
           </div>
         </summary>

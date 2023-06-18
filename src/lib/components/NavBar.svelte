@@ -12,7 +12,7 @@
 
   const handleModalLink = (ev) => {
     const url = new URL(ev.target.href);
-    if ($page.url.toString() === url.toString()) return;
+    if ($page.url.toString() === url.toString() && url.pathname !== "/profile") return;
 
     ev.preventDefault();
 
@@ -54,12 +54,16 @@
   };
 </script>
 
-<nav class="inline-flex items-center w-full bg-white shadow-sm px-4 md:px-8 relative py-1.5">
+<nav
+  class="inline-flex items-center w-full bg-white shadow-sm px-4 md:px-8 relative py-1.5 z-10 border-b">
   <a href="/">
     <img src="/app-logo.svg" alt="Brand logo" class="w-10 h-10" />
   </a>
 
   <div class="hidden sm:inline-flex flex-1 ml-4">
+    <a
+      class="h-full hover:bg-gray-100 hover:text-primary-500 inline-flex rounded-lg px-3 py-1.5 sm:text-sm md:text-base"
+      href="/collections/">All</a>
     <a
       class="h-full hover:bg-gray-100 hover:text-primary-500 inline-flex rounded-lg px-3 py-1.5 sm:text-sm md:text-base"
       href="/collections/men">Men</a>
@@ -69,9 +73,6 @@
     <a
       class="h-full hover:bg-gray-100 hover:text-primary-500 inline-flex rounded-lg px-3 py-1.5 sm:text-sm md:text-base"
       href="/collections/kids">Kids</a>
-    <a
-      class="h-full hover:bg-gray-100 hover:text-primary-500 inline-flex rounded-lg px-3 py-1.5 sm:text-sm md:text-base"
-      href="/collections/">Shop</a>
   </div>
 
   <div class="ml-auto inline-flex items-center">
@@ -121,7 +122,7 @@
         on:click={handleModalLink}
         class="relative text-gray-600 font-medium text-center px-2 hover:text-black ml-3 hover:text-primary-500">
         {#if $page.data.cartCount}
-          <div class="fixed top-1 ml-8 text-xs rounded-lg z-1 font-bold">
+          <div class="absolute -top-1.5 ml-7 text-xs rounded-lg z-1 font-bold">
             {$page.data.cartCount}
           </div>
         {/if}

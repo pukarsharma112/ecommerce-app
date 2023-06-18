@@ -6,6 +6,7 @@
 
   import Sorter from "./Sorter.svelte";
   import ProductCard from "$lib/components/ProductCard.svelte";
+  import ProductSkeleton from "$lib/components/ProductSkeleton.svelte";
 
   let ref,
     loading = false;
@@ -384,11 +385,25 @@
   </form>
 
   <div class="flex-1">
-    <div class="grid grid-cols-1 mb-3 sm:grid-cols-2 xl:grid-cols-3 py-2 md:py-0 md:px-2 gap-2">
-      {#each $products as product (product.id)}
-        <ProductCard {product} isOnWishList={data.userWishList.has(product.id)} />
-      {/each}
-    </div>
+    {#if $products.length}
+      <div class="grid grid-cols-1 mb-3 sm:grid-cols-2 xl:grid-cols-3 py-2 md:py-0 md:px-2 gap-2">
+        {#each $products as product (product.id)}
+          <ProductCard {product} isOnWishList={data.userWishList.has(product.id)} />
+        {/each}
+        {#if loading}
+          {#each Array(7) as _, i}
+            <ProductSkeleton />
+          {/each}
+        {/if}
+      </div>
+    {:else}
+      <div class="flex h-full items-center justify-center">
+        <div class="text-center">
+          <h1 class="m-auto text-lg text-gray-700">No products found to show</h1>
+          <a href="/collections" class="text-primary-500 hover:underline">Show all</a>
+        </div>
+      </div>
+    {/if}
 
     <div class="text-center" bind:this={ref}>
       {#if loading}
@@ -400,7 +415,7 @@
   </div>
 </div>
 
-{#if import.meta.env.SSR}
+{#if import.meta.env.SSR && $products.length}
   <div class="inline-flex items-center w-full items-center justify-end px-4 py-3 space-x-2">
     <form>
       <input type="hidden" name="page" value={pageNumber - 1} />

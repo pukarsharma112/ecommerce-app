@@ -32,17 +32,13 @@
   });
 </script>
 
-<div class="flex flex-col overflow-hidden h-full w-full">
-  <header>
-    <!-- for notices of events -->
-    <div class="bg-black text-center text-sm md:text-base tracking-tight text-gray-200" />
+<header class="sticky top-0 z-10">
+  <!-- for notices of events -->
+  <div class="bg-black text-center text-sm md:text-base tracking-tight text-gray-200" />
 
-    <!-- navbar -->
-    <NavBar />
-  </header>
+  <!-- navbar -->
+  <NavBar />
+</header>
 
-  <div class="flex-1 overflow-auto">
-    <slot />
-    <Toaster />
-  </div>
-</div>
+<slot />
+<Toaster />

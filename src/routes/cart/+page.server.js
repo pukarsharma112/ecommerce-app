@@ -3,6 +3,7 @@ import { superValidate } from "sveltekit-superforms/server";
 
 import { prisma } from "$lib/server/prisma";
 import { getUserCart } from "$lib/server/functions";
+import { getShippingCharge } from "$lib/utilities/functions";
 import { checkoutBillingSchema } from "$lib/utilities/zod-schema";
 
 const shipping = 14.34;
@@ -74,6 +75,8 @@ export const actions = {
 
     if (!form.valid) throw error(400, { form });
 
+    const shippingCharge = getShippingCharge(form.data.deliveryMethod);
+
     const currentUser = await event.locals.getCurrentUser();
     const userId = currentUser.id;
 
@@ -117,12 +120,12 @@ export const actions = {
           quantity,
           productId: c.product.id,
           discount: totalDiscount,
-          total: subtotal - totalDiscount + shipping
+          total: subtotal - totalDiscount
         };
       })
       .filter(Boolean);
 
-    const total = ordersData.reduce((acc, cur) => acc + cur.total, 0);
+    const total = ordersData.reduce((acc, cur) => acc + cur.total, 0) + shippingCharge;
 
     for (const id of quantityUpdates.keys()) {
       await prisma.product.update({
@@ -136,6 +139,7 @@ export const actions = {
         total,
         userId,
         paymentMethod: form.data.paymentMethod,
+        deliveryMethod: form.data.deliveryMethod,
         orders: { create: ordersData }
       }
     });

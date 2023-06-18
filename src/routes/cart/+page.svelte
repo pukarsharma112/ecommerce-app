@@ -5,13 +5,20 @@
 
   import { toast } from "$lib/utilities/toast";
   import Cart from "$lib/components/Cart.svelte";
+  import { getShippingCharge } from "$lib/utilities/functions";
   import { checkoutBillingSchema } from "$lib/utilities/zod-schema";
 
   export let data;
 
+  let deliveryMethod = "standard";
   const { form, enhance, errors } = superForm(data.form, {
-    validators: checkoutBillingSchema
+    validators: checkoutBillingSchema,
+    onSubmit() {
+      total.show({ id: "checkout", type: "loading", message: "Loading..." });
+    }
   });
+
+  $: shippingCharge = getShippingCharge(deliveryMethod);
 </script>
 
 <svelte:head>
@@ -23,9 +30,7 @@
     method="post"
     action="/cart?/checkout"
     class="flex flex-col lg:flex-row py-8 px-6 space-y-5 lg:space-y-0"
-    use:enhance={() => {
-      toast.show({ id: "checkout", type: "loading", message: "Loading..." });
-    }}>
+    use:enhance>
     <!-- payment form section -->
     <div class="w-full lg:pr-10 space-y-5 divide-y divide-gray-300">
       <div class="space-y-2">
@@ -64,71 +69,24 @@
           {/if}
         </div>
 
-        <div>
-          <label for="address">Address</label>
-          <input
-            required
-            type="text"
-            id="address"
-            name="address"
-            bind:value={$form.address}
-            data-invalid={!!$errors.address?.[0]}
-            class="block w-full rounded-lg border border-gray-300 text-sm shadow-sm mt-1" />
-          {#if $errors.address?.[0]}
-            <small class="text-red-500">{$errors.address[0]}</small>
-          {/if}
-        </div>
-
         <div class="flex <sm:flex-col <sm:space-y-3 sm:space-x-3">
           <div class="w-full">
-            <label for="city">City</label>
+            <label for="address">Address</label>
             <input
               required
               type="text"
-              id="city"
-              name="city"
-              bind:value={$form.city}
-              data-invalid={!!$errors.city?.[0]}
+              id="address"
+              name="address"
+              bind:value={$form.address}
+              data-invalid={!!$errors.address?.[0]}
               class="block w-full rounded-lg border border-gray-300 text-sm shadow-sm mt-1" />
-            {#if $errors.city?.[0]}
-              <small class="text-red-500">{$errors.city[0]}</small>
+            {#if $errors.address?.[0]}
+              <small class="text-red-500">{$errors.address[0]}</small>
             {/if}
           </div>
 
           <div class="w-full">
-            <label for="country">Country</label>
-            <input
-              required
-              type="text"
-              id="country"
-              name="country"
-              bind:value={$form.country}
-              data-invalid={!!$errors.country?.[0]}
-              class="block w-full rounded-lg border border-gray-300 text-sm shadow-sm mt-1" />
-            {#if $errors.country?.[0]}
-              <small class="text-red-500">{$errors.country[0]}</small>
-            {/if}
-          </div>
-        </div>
-
-        <div class="flex <sm:flex-col <sm:space-y-3 sm:space-x-3">
-          <div class="w-full">
-            <label for="state">State</label>
-            <input
-              required
-              type="text"
-              id="state"
-              name="state"
-              bind:value={$form.state}
-              data-invalid={!!$errors.state?.[0]}
-              class="block w-full rounded-lg border border-gray-300 text-sm shadow-sm mt-1" />
-            {#if $errors.state?.[0]}
-              <small class="text-red-500">{$errors.state[0]}</small>
-            {/if}
-          </div>
-
-          <div class="w-full">
-            <label for="postalCode">Postal code</label>
+            <label for="postalCode">Postal Code</label>
             <input
               required
               type="text"
@@ -160,28 +118,101 @@
       </div>
 
       <div class="space-y-3">
-        <h1 class="text-lg font-medium mt-4">Payment</h1>
-        <div class="inline-flex items-center w-full space-x-4 pb-4">
-          <div class="inline-flex items-center space-x-2">
+        <h1 class="text-lg font-medium mt-4">Payment method</h1>
+        <div class="flex mt-3 space-x-2">
+          <div class="w-full">
             <input
               required
               type="radio"
               name="paymentMethod"
               id="cash-on-delivery"
               value="cash-on-delivery"
-              class="checked:bg-primary-500 focus:ring-primary-500 text-primary-500" />
-            <label for="cash-on-delivery" class="text-sm font-medium">Cash on delivery</label>
+              class="sr-only peer" />
+            <label
+              for="cash-on-delivery"
+              class="relative border rounded-md py-3 px-4 flex flex-col items-center justify-center text-sm font-medium uppercase bg-white shadow-sm focus:outline-none sm:flex-1 sm:py-6 peer-checked:ring-2 peer-checked:ring-primary-500 peer-checked:border-primary-500 cursor-pointer peer-checked:text-primary-500">
+              <svg
+                class="w-15 h-15 text-primary-500"
+                xmlns="http://www.w3.org/2000/svg"
+                data-name="Layer 1"
+                viewBox="0 0 512 512"
+                id="cash-on-delivery"
+                ><path
+                  fill="#1e1f27"
+                  d="M304.683 328.777a7.5 7.5 0 0 0 7.5 7.5h22.06a16.08 16.08 0 0 1-14.203 8.571h-7.857a7.5 7.5 0 0 0-5.424 12.68l31.428 32.906a7.5 7.5 0 1 0 10.848-10.36l-20.457-21.419a31.187 31.187 0 0 0 21.61-22.378h5.21a7.5 7.5 0 0 0 0-15h-5.207a30.896 30.896 0 0 0-3.568-8.571h8.774a7.5 7.5 0 0 0 0-15h-43.214a7.5 7.5 0 0 0 0 15h7.857a16.08 16.08 0 0 1 14.203 8.57h-22.06a7.5 7.5 0 0 0-7.5 7.5ZM474.5 235.76H285.618l-5.864-57.817a72.455 72.455 0 0 0-8.085-26.487l-3.266-6.146-.122-.239c-.015-.032-.032-.064-.048-.095l-27.425-54.242a27.279 27.279 0 0 0-23.163-14.948 7.898 7.898 0 0 0-.833.01l-11.727.796q-52.71 3.577-105.416 7.145L84.04 84.802a242.448 242.448 0 0 1-7.736-.367c-1.833-.117-3.703-.261-5.667-.432a16.465 16.465 0 0 0-12.652-14.288L9.322 57.525a7.5 7.5 0 0 0-3.644 14.551L54.41 84.284l.165.039a1.501 1.501 0 0 1 1.131 1.794L31.433 193.203a1.498 1.498 0 0 1-1.794 1.131l-20.48-4.643a7.5 7.5 0 1 0-3.317 14.63l20.481 4.642a16.62 16.62 0 0 0 3.679.414 16.515 16.515 0 0 0 16.06-12.858l.12-.53 14.419 9.963a47.153 47.153 0 0 0 11.67 5.866l20.09 6.85a19.865 19.865 0 0 0-8.638 17.995c.01.197.027.395.052.597a19.913 19.913 0 0 0 19.83 18.047c.233 0 .47-.004.705-.012q6.567-.228 13.138-.46a20.983 20.983 0 0 0 25.719 28.932l12.413-4.246v137.68a37.542 37.542 0 0 0 37.5 37.5H474.5a37.542 37.542 0 0 0 37.5-37.5V273.26a37.542 37.542 0 0 0-37.5-37.5Zm-370.71 4.544a4.946 4.946 0 0 1-5.086-4.509 5.324 5.324 0 0 0-.018-.173l-.003-.052a4.922 4.922 0 0 1 3.696-5.21c1.367-.345 3.862-1.134 7.81-2.391 1.619-.516 3.478-1.109 4.91-1.55l25.8 8.796-5.766 3.994q-15.678.555-31.344 1.095Zm53.165 22.894-18.66 6.382a5.994 5.994 0 0 1-7.757-4.26 6.057 6.057 0 0 1 2.533-6.435l7.863-5.447a7.493 7.493 0 0 0 2.12-1.47l14.072-9.748 8.915 5.076a37.345 37.345 0 0 0-9.086 15.902Zm.525-38.036a7.498 7.498 0 0 0-1.29-.581l-38.334-13.07-.109-.037-40.655-13.86a32.188 32.188 0 0 1-7.968-4.005l-17.38-12.01a7.499 7.499 0 0 0-2.073-1.002l18.536-81.77c.148.022.295.05.447.063a258.045 258.045 0 0 0 15.305.916c.229.007.465.004.697-.012l16.03-1.092q52.712-3.563 105.415-7.144l11.261-.765a12.267 12.267 0 0 1 10.055 6.7l27.426 54.241.24.472a10 10 0 0 0 .074.143l3.263 6.14a57.483 57.483 0 0 1 6.413 20.995l5.707 56.276h-18.362l-5.065-41.108a7.498 7.498 0 0 0-3.344-5.364l-8.811-5.749c-.049-.033-.093-.07-.143-.103l-23.072-15.042a22.108 22.108 0 0 0-31.353 7.714 21.907 21.907 0 0 0-2.537 7.294c-.066.377-.118.767-.154 1.144a21.421 21.421 0 0 0-.129 2.353 21.918 21.918 0 0 0 8.43 17.373l56.864 44.77.02.016 11.905 9.374a9.525 9.525 0 0 1 2.892 3.727 9.796 9.796 0 0 1 .593 5.93 9.692 9.692 0 0 1-.744 2.147c-.016.036-.036.07-.051.106a9.647 9.647 0 0 1-8.68 5.357 9.553 9.553 0 0 1-4.78-1.268Zm110.228 56.745q.472-.563.905-1.147h177.353A29.61 29.61 0 0 0 467 301.794v86.872a29.61 29.61 0 0 0-21.034 21.034H221.614a29.61 29.61 0 0 0-21.034-21.034v-86.872a29.61 29.61 0 0 0 21.034-21.034h3.204l11.782 6.708a24.698 24.698 0 0 0 31.108-5.561ZM235.65 224.27l-40.39-31.799a7.019 7.019 0 0 1-2.69-5.573 6.549 6.549 0 0 1 .041-.738c.008-.063.012-.114.018-.177.012-.064.022-.128.032-.192a6.947 6.947 0 0 1 .814-2.35 7.108 7.108 0 0 1 10.078-2.481l6.41 4.18.028.02 22.661 14.785ZM497 417.201a22.526 22.526 0 0 1-22.5 22.5H193.08a22.526 22.526 0 0 1-22.5-22.5V273.26a22.548 22.548 0 0 1 9.204-18.14l28.11 16.004a7.487 7.487 0 0 0-.314 2.136 14.517 14.517 0 0 1-14.5 14.5 7.5 7.5 0 0 0-7.5 7.5v99.94a7.5 7.5 0 0 0 7.5 7.5 14.517 14.517 0 0 1 14.5 14.5 7.5 7.5 0 0 0 7.5 7.5H452.5a7.5 7.5 0 0 0 7.5-7.5 14.517 14.517 0 0 1 14.5-14.5 7.5 7.5 0 0 0 7.5-7.5v-99.94a7.5 7.5 0 0 0-7.5-7.5 14.517 14.517 0 0 1-14.5-14.5 7.5 7.5 0 0 0-7.5-7.5H273.472a24.748 24.748 0 0 0-2.043-9.598 24.349 24.349 0 0 0-3.248-5.402H474.5a22.526 22.526 0 0 1 22.5 22.5Z" /></svg>
+              <span>Cash on delivery</span>
+            </label>
           </div>
 
-          <div class="inline-flex items-center space-x-2">
+          <div class="w-full">
             <input
               required
               type="radio"
               name="paymentMethod"
               id="pay-with-stripe"
               value="pay-with-stripe"
-              class="checked:bg-primary-500 focus:ring-primary-500 text-primary-500" />
-            <label for="pay-with-stripe" class="text-sm font-medium">Pay with stripe</label>
+              class="sr-only peer" />
+            <label
+              for="pay-with-stripe"
+              class="relative border rounded-md py-3 px-4 flex flex-col items-center justify-center text-sm font-medium uppercase bg-white shadow-sm focus:outline-none sm:flex-1 sm:py-6 peer-checked:ring-2 peer-checked:ring-primary-500 peer-checked:border-primary-500 cursor-pointer peer-checked:text-primary-500">
+              <i class="i-bi-stripe w-14 h-14 mb-1 text-black" />
+              <span class="">Checkout with stripe</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="text-lg font-medium mt-4">Delivery method</h1>
+
+        <div class="flex flex-col md:flex-row mt-3 <md:space-y-2 md:space-x-2">
+          <div class="w-full relative">
+            <input
+              required
+              type="radio"
+              id="standard"
+              value="standard"
+              name="deliveryMethod"
+              class="sr-only peer"
+              bind:group={deliveryMethod} />
+            <label
+              for="standard"
+              class="relative border rounded-md py-3 px-4 flex flex-col text-sm font-medium bg-white shadow-sm focus:outline-none sm:flex-1 sm:py-4 peer-checked:ring-2 peer-checked:ring-primary-500 peer-checked:border-primary-500 cursor-pointer">
+              <div>
+                <h1>Standard</h1>
+                <span class="text-sm text-gray-700 font-[400]">4-10 business days</span>
+              </div>
+              <div class="mt-4">
+                <strong>$5.00</strong>
+              </div>
+            </label>
+            <i
+              class="invisible peer-checked:visible i-bi-check-circle-fill absolute right-2 top-2 text-primary-500" />
+          </div>
+
+          <div class="w-full relative">
+            <input
+              required
+              type="radio"
+              id="express"
+              value="express"
+              name="deliveryMethod"
+              class="sr-only peer"
+              bind:group={deliveryMethod} />
+
+            <label
+              for="express"
+              class="relative border rounded-md py-3 px-4 flex flex-col text-sm font-medium bg-white shadow-sm focus:outline-none sm:flex-1 sm:py-4 peer-checked:ring-2 peer-checked:ring-primary-500 group peer-checked:border-primary-500 cursor-pointer">
+              <div>
+                <h1>Express</h1>
+                <span class="text-sm text-gray-700 font-[400]">2-3 business days</span>
+              </div>
+              <div class="mt-4">
+                <strong>$16.00</strong>
+              </div>
+            </label>
+            <i
+              class="invisible peer-checked:visible i-bi-check-circle-fill absolute right-2 top-2 text-primary-500" />
           </div>
         </div>
       </div>
@@ -192,7 +223,7 @@
       <div class="sticky top-0">
         <h1 class="text-lg font-medium font-gray-700">Order summary</h1>
         <div class="bg-white rounded-lg border border-gray-300 shadow-sm mt-4">
-          <Cart userCart={data.userCart} showTotal />
+          <Cart userCart={data.userCart} {shippingCharge} showTotal />
         </div>
       </div>
     </div>

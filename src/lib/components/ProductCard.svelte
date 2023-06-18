@@ -42,21 +42,13 @@
 
 {#if product}
   <div class="bg-white rounded-xl p-2 shadow-sm">
-    <div class="h-90 bg-gray-100 rounded-md group/image relative overflow-hidden">
-      <img
-        alt={product.title}
-        src={product.images[0]?.url}
-        class="h-full w-full object-fit rounded-xl group-hover/image:scale-120 transition-all duration-300" />
-
-      <div
-        class="hidden opacity-0 group-hover/image:flex group-hover/image:opacity-100 transition-all duration-500 absolute w-full h-full bg-black/10 top-0 left-0 p-2">
-        <a
-          on:click={handlePreview}
-          href="/products/{product.id}"
-          class="mt-auto bg-white/90 w-full text-black font-medium text-sm rounded-md py-1 text-center focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black/30">
-          Preview
-        </a>
-      </div>
+    <div class="h-90 bg-gray-100 rounded-md group/image overflow-hidden">
+      <a href="/products/{product.id}">
+        <img
+          alt={product.title}
+          src={product.images[0]?.url}
+          class="h-full w-full object-fit rounded-xl group-hover/image:scale-120 transition-all duration-300" />
+      </a>
     </div>
     <div class="px-1 pt-2 overflow-hidden">
       <div class="w-full inline-flex items-center">

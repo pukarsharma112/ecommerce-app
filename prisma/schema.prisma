@@ -76,12 +76,15 @@ model Invoice {
   id String @id @default(cuid())
 
   userId String  @map("user_id")
-  paymentMethod  String?
-  paid           Boolean @default(false)
+
+  paymentMethod  String
   stripeId       String?
+
+  deliveryMethod String
 
   total Float
   status  String @default("processing")
+  paid           Boolean @default(false)
 
   user   User    @relation(fields: [userId], references: [id])
   orders  Order[]

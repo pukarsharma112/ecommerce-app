@@ -1,5 +1,15 @@
 import { prisma } from "$lib/server/prisma";
 
+export function loadCurrentUser(userId) {
+  if (!userId) return undefined;
+  return prisma.user
+    .findFirst({
+      where: { id: userId },
+      select: { id: true, name: true, email: true, avatar: true }
+    })
+    .catch(() => undefined);
+}
+
 export async function getUserCart(userId) {
   if (!userId) return [];
 

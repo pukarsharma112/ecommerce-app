@@ -1,17 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import { setFlash } from "sveltekit-flash-message/server";
 
-import { prisma } from "$lib/server/prisma";
-
-function loadCurrentUser(userId) {
-  if (!userId) return undefined;
-  return prisma.user
-    .findFirst({
-      where: { id: userId },
-      select: { id: true, name: true, avatar: true }
-    })
-    .catch(() => undefined);
-}
+import { loadCurrentUser } from "$lib/server/functions";
 
 export const handle = async ({ resolve, event }) => {
   // helper function to set flash message
