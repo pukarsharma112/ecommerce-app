@@ -22,7 +22,7 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting && $cursor && !loading) {
           const url = new URL($page.url);
-          
+
           url.searchParams.set("cursor", $cursor);
           loading = true;
           fetch(url)

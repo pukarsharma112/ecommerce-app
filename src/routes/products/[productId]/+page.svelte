@@ -171,14 +171,21 @@
           <div>
             <h3 class="text-sm font-medium text-gray-900 mb-3">Color</h3>
             {#each data.product.colors as c}
+              {@const disabled = c.available === false || data.product.quantity <= 0}
               <input
-                title={c.color}
-                value={c.color}
+                {disabled}
                 name="colors"
                 type="checkbox"
-                class="cursor-pointer rounded-full w-8 h-8 border-0 focus:ring-0 !checked:ring-2 !checked:ring-primary-500 !checked:ring-offset-2 shadow-sm mx-1.5"
-                style:background-color={c.hex}
-                id="colors-black" />
+                title={c.color}
+                value={c.id}
+                class={clsx(
+                  "rounded-full w-8 h-8 border-0 focus:ring-0 !checked:ring-2 !checked:ring-primary-500 !checked:ring-offset-2 shadow-sm mx-1.5",
+                  {
+                    "cursor-pointer": !disabled,
+                    "cursor-not-allowed": disabled
+                  }
+                )}
+                style:background-color={c.hex} />
             {/each}
           </div>
         {/if}
@@ -190,10 +197,51 @@
             <h3 class="text-sm font-medium text-gray-900">Size</h3>
 
             <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4 mt-4">
-              {#each data.product.sizes as size (size.id)}
-                <label
+              {#each data.product.sizes as s (s.id)}
+                {@const disabled = s.available === false || data.product.quantity <= 0}
+                <div>
+                  <input
+                    name="sizes"
+                    type="checkbox"
+                    value={s.id}
+                    id="size-{s.id}"
+                    class="sr-only peer"
+                    {disabled} />
+                  <label
+                    for="size-{s.id}"
+                    class={clsx(
+                      "relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6 peer-checked:ring-2 peer-checked:ring-primary-500 peer-checked:border-primary-500",
+                      {
+                        "cursor-pointer": !disabled,
+                        "cursor-not-allowed": disabled
+                      }
+                    )}>
+                    <span>{s.size}</span>
+
+                    {#if disabled}
+                      <span
+                        aria-hidden="true"
+                        class="peer-checked:hidden pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200">
+                        <svg
+                          class="absolute inset-0 h-full w-full stroke-2 text-gray-200"
+                          viewBox="0 0 100 100"
+                          preserveAspectRatio="none"
+                          stroke="currentColor">
+                          <line
+                            x1="0"
+                            y1="100"
+                            x2="100"
+                            y2="0"
+                            vector-effect="non-scaling-stroke" />
+                        </svg>
+                      </span>
+                    {/if}
+                  </label>
+                </div>
+
+                <!-- <label
                   class={clsx(
-                    "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6",
+                    "hidden group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6",
                     {
                       "bg-gray-50 text-gray-200 cursor-not-allowed border-2":
                         size.available == false || !data.product.quantity,
@@ -206,12 +254,13 @@
                     name="size-choice"
                     class="sr-only peer"
                     disabled={size.available === false} />
+                  <div class="peer-checked:hidden">checked</div>
                   <span id="size-{size.size}">{size.size}</span>
 
                   {#if size.available === false || !data.product.quantity}
                     <span
                       aria-hidden="true"
-                      class="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200">
+                      class="peer-checked:hidden pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200">
                       <svg
                         class="absolute inset-0 h-full w-full stroke-2 text-gray-200"
                         viewBox="0 0 100 100"
@@ -221,7 +270,7 @@
                       </svg>
                     </span>
                   {/if}
-                </label>
+                </label> -->
               {/each}
             </div>
           </div>

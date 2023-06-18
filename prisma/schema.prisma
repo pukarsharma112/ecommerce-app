@@ -34,6 +34,8 @@ model Cart {
   user    User    @relation(fields: [userId], references: [id])
   product Product @relation(fields: [productId], references: [id])
 
+  createdAt DateTime @default(now()) @map("created_at")
+
   @@map("carts")
 }
 

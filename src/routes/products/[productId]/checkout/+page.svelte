@@ -187,7 +187,7 @@
             id="pay-with-stripe"
             value="pay-with-stripe"
             class="checked:bg-primary-500 focus:ring-primary-500 text-primary-500" />
-            <label for="pay-with-stripe" class="text-sm font-medium">Pay with stripe</label>
+          <label for="pay-with-stripe" class="text-sm font-medium">Pay with stripe</label>
         </div>
       </div>
     </div>
