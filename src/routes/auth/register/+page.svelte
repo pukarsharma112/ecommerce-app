@@ -17,7 +17,7 @@
     taintedMessage: false,
     validators: registerSchema,
     async onResult({ result }) {
-      if ((result.type = "redirect")) {
+      if (result.type === "redirect") {
         if (typeof onSuccess === "function") {
           onSuccess();
           invalidateAll();

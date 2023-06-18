@@ -4,7 +4,7 @@
   import { writable } from "svelte/store";
   import NavLink from "$lib/components/NavLink.svelte";
 
-  import Sorter from "./lib/Sorter.svelte";
+  import Sorter from "./Sorter.svelte";
   import ProductCard from "$lib/components/ProductCard.svelte";
 
   let ref,
@@ -22,6 +22,7 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting && $cursor && !loading) {
           const url = new URL($page.url);
+          
           url.searchParams.set("cursor", $cursor);
           loading = true;
           fetch(url)

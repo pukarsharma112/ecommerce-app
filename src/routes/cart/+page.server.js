@@ -2,7 +2,7 @@ import { redirect, error } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 
 import { prisma } from "$lib/server/prisma";
-import { getUserCart } from "./lib/functions.server";
+import { getUserCart } from "$lib/server/functions";
 import { checkoutBillingSchema } from "$lib/utilities/zod-schema";
 
 const shipping = 14.34;

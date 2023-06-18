@@ -34,7 +34,8 @@ export async function load(event) {
           }
         }
       }
-    }
+    },
+    orderBy: { createdAt: "desc" }
   });
 
   return { invoices };

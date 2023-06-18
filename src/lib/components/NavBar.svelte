@@ -45,7 +45,7 @@
   };
 
   const loadCartData = async () => {
-    const response = await fetch("/cart", {
+    const response = await fetch("/api/cart", {
       headers: { Accept: "application/json", "Content-Type": "application/json" }
     });
 

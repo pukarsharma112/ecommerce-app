@@ -62,7 +62,7 @@
               <i
                 class={clsx({
                   "i-heroicons-banknotes": invoice.paymentMethod === "cash-on-delivery",
-                  "i-heroicons-credit-card": true
+                  "i-heroicons-credit-card": invoice.paymentMethod === "pay-with-stripe"
                 })} />
               <p class="ml-2 text-sm font-medium">{invoice.paymentMethod?.replaceAll("-", " ")}</p>
             </div>
@@ -83,7 +83,8 @@
                 </div>
                 <div class="ml-6 flex-1 text-sm">
                   <div class="font-medium text-gray-900 sm:flex sm:justify-between">
-                    <a href="/products/{order.product.id}" class="text-md hover:text-primary-500">{order.product.title}</a>
+                    <a href="/products/{order.product.id}" class="text-md hover:text-primary-500"
+                      >{order.product.title}</a>
                     <p class="mt-2 sm:mt-0">${order.product.price} x {order.quantity}</p>
                   </div>
                   <p class="hidden text-gray-500 sm:mt-2 sm:block">

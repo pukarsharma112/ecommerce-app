@@ -1,16 +1,40 @@
 <script>
   import { clsx } from "clsx";
   import { page } from "$app/stores";
-  import { enhance } from "$app/forms";
   import { invalidateAll } from "$app/navigation";
+  import { applyAction, deserialize, enhance } from "$app/forms";
   import { updateFlash } from "sveltekit-flash-message/client";
 
   import { toast } from "$lib/utilities/toast";
-  import { referer } from "$lib/utilities/stores";
+  import { referer, activeModal } from "$lib/utilities/stores";
   import WishlistButton from "$lib/components/WishlistButton.svelte";
 
   export let data;
   let previewId = 0;
+
+  const handleCartFormSubmit = async (ev) => {
+    ev.preventDefault();
+
+    if (!$page.data.currentUser) {
+      activeModal.set("/auth/login");
+    } else {
+      toast.show({ id: "cart", type: "loading", message: "Loading..." });
+
+      const action = new URL(
+        event.submitter?.hasAttribute("formaction") ? event.submitter.formAction : ev.target.action
+      );
+
+      const response = await fetch(action, {
+        method: "POST",
+        body: new FormData(ev.target)
+      });
+
+      const result = deserialize(await response.text());
+
+      await updateFlash(page);
+      await applyAction(result);
+    }
+  };
 </script>
 
 <svelte:head>
@@ -140,23 +164,13 @@
         </div>
       </section>
 
-      <form
-        method="post"
-        action="/cart?/addToCart"
-        class="mt-6"
-        use:enhance={() => {
-          toast.show({ id: "cart", type: "loading", message: "Loading..." });
-          return ({ update }) => {
-            updateFlash(page);
-            invalidateAll();
-          };
-        }}>
+      <form class="mt-6" method="post" action="/cart?/addToCart" on:submit={handleCartFormSubmit}>
         <input type="hidden" name="productId" value={data.product.id} />
         <!-- Colors -->
         {#if data?.product?.colors?.length}
           <div>
             <h3 class="text-sm font-medium text-gray-900 mb-3">Color</h3>
-              {#each data.product.colors as c}
+            {#each data.product.colors as c}
               <input
                 title={c.color}
                 value={c.color}
@@ -165,8 +179,7 @@
                 class="cursor-pointer rounded-full w-8 h-8 border-0 focus:ring-0 !checked:ring-2 !checked:ring-primary-500 !checked:ring-offset-2 shadow-sm mx-1.5"
                 style:background-color={c.hex}
                 id="colors-black" />
-              {/each}
-
+            {/each}
           </div>
         {/if}
 
