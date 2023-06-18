@@ -3,11 +3,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function makeData() {
-	// const data = products.map(product => product);
+function makeData() {
+	const data = products.map(product => {
+		return product
+	});
 
-	// const fileData = `export const products = ${JSON.stringify(data, null, 2)}`
-	// fs.writeFileSync("./prisma/temp.js", fileData)
+	const fileData = `export const products = ${JSON.stringify(data, null, 2)}`
+	fs.writeFileSync("./prisma/temp.js", fileData)
 
 }
 

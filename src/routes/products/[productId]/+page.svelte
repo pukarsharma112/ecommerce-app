@@ -153,40 +153,20 @@
         }}>
         <input type="hidden" name="productId" value={data.product.id} />
         <!-- Colors -->
-        {#if data?.product?.colors_available}
+        {#if data?.product?.colors?.length}
           <div>
-            <h3 class="text-sm font-medium text-gray-900">Color</h3>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Color</h3>
+              {#each data.product.colors as c}
+              <input
+                title={c.color}
+                value={c.color}
+                name="colors"
+                type="checkbox"
+                class="cursor-pointer rounded-full w-8 h-8 border-0 focus:ring-0 !checked:ring-2 !checked:ring-primary-500 !checked:ring-offset-2 shadow-sm mx-1.5"
+                style:background-color={c.hex}
+                id="colors-black" />
+              {/each}
 
-            <fieldset class="mt-4">
-              <legend class="sr-only">Choose a color</legend>
-              <div class="flex items-center space-x-3">
-                <!--
-                  Active and Checked: "ring ring-offset-1"
-                  Not Active and Checked: "ring-2"
-                -->
-
-                <!-- <label
-                    class={clsx(
-                      "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400 ring-offset-1 border-2",
-                      {
-                        "!border-primary-500": selectedColor === c
-                      }
-                    )}
-                    style:border-color={c}>
-                    <input
-                      value={c}
-                      type="radio"
-                      class="sr-only"
-                      name="colors"
-                      required={!data.cart}
-                      bind:group={selectedColor} />
-                    <span
-                      aria-hidden="true"
-                      style:background={c}
-                      class="h-8 w-8 border border-black border-opacity-10 rounded-full" />
-                  </label> -->
-              </div>
-            </fieldset>
           </div>
         {/if}
 

@@ -31,7 +31,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLACK"
+          "color": "black",
+          "hex": "#000"
         }
       ]
     },
@@ -48,7 +49,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-4.jpg"
-        },
+        }
       ]
     },
     "quantity": 6
@@ -79,10 +80,12 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GREEN"
+          "color": "green",
+          "hex": "#4ade80"
         },
         {
-          "color": "PINK"
+          "color": "pink",
+          "hex": "#f472b6"
         }
       ]
     },
@@ -102,7 +105,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-9.jpg"
-        },
+        }
       ]
     },
     "quantity": 2
@@ -130,7 +133,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -141,7 +145,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-11.jpg"
-        },
+        }
       ]
     },
     "quantity": 10
@@ -169,7 +173,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "RED"
+          "color": "red",
+          "hex": "#f87171"
         }
       ]
     },
@@ -186,7 +191,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-15.jpg"
-        },
+        }
       ]
     },
     "quantity": 7
@@ -214,7 +219,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLACK"
+          "color": "black",
+          "hex": "#000"
         }
       ]
     },
@@ -228,7 +234,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-18.jpg"
-        },
+        }
       ]
     },
     "quantity": 9
@@ -256,7 +262,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "ORANGE"
+          "color": "orange",
+          "hex": "#fb923c"
         }
       ]
     },
@@ -273,7 +280,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-22.jpg"
-        },
+        }
       ]
     },
     "quantity": 9
@@ -301,7 +308,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "ORANGE"
+          "color": "orange",
+          "hex": "#fb923c"
         }
       ]
     },
@@ -312,7 +320,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-24.jpg"
-        },
+        }
       ]
     },
     "quantity": 4
@@ -343,7 +351,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GRAY"
+          "color": "gray",
+          "hex": "#9ca3af"
         }
       ]
     },
@@ -360,7 +369,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-28.jpg"
-        },
+        }
       ]
     },
     "quantity": 1
@@ -391,7 +400,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -405,7 +415,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-31.jpg"
-        },
+        }
       ]
     },
     "quantity": 0
@@ -436,7 +446,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "PINK"
+          "color": "pink",
+          "hex": "#f472b6"
         }
       ]
     },
@@ -450,7 +461,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-34.jpg"
-        },
+        }
       ]
     },
     "quantity": 3
@@ -481,7 +492,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -492,7 +504,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-36.jpg"
-        },
+        }
       ]
     },
     "quantity": 5
@@ -523,7 +535,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -534,7 +547,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-38.jpg"
-        },
+        }
       ]
     },
     "quantity": 0
@@ -565,7 +578,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "YELLOW"
+          "color": "yellow",
+          "hex": "#facc15"
         }
       ]
     },
@@ -576,7 +590,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-40.jpg"
-        },
+        }
       ]
     },
     "quantity": 6
@@ -607,7 +621,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -618,7 +633,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-42.jpg"
-        },
+        }
       ]
     },
     "quantity": 8
@@ -646,7 +661,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GRAY"
+          "color": "gray",
+          "hex": "#9ca3af"
         }
       ]
     },
@@ -663,7 +679,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-46.jpg"
-        },
+        }
       ]
     },
     "quantity": 8
@@ -694,7 +710,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GREEN"
+          "color": "green",
+          "hex": "#4ade80"
         }
       ]
     },
@@ -711,7 +728,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-50.jpg"
-        },
+        }
       ]
     },
     "quantity": 9
@@ -739,7 +756,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -753,7 +771,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-53.jpg"
-        },
+        }
       ]
     },
     "quantity": 5
@@ -781,7 +799,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         }
       ]
     },
@@ -792,7 +811,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-55.jpg"
-        },
+        }
       ]
     },
     "quantity": 9
@@ -820,13 +839,16 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "BLUE"
+          "color": "blue",
+          "hex": "#60a5fa"
         },
         {
-          "color": "PINK"
+          "color": "pink",
+          "hex": "#f472b6"
         },
         {
-          "color": "YELLOW"
+          "color": "yellow",
+          "hex": "#facc15"
         }
       ]
     },
@@ -843,7 +865,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-59.jpg"
-        },
+        }
       ]
     },
     "quantity": 9
@@ -874,7 +896,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GRAY"
+          "color": "gray",
+          "hex": "#9ca3af"
         }
       ]
     },
@@ -885,7 +908,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-61.jpg"
-        },
+        }
       ]
     },
     "quantity": 0
@@ -919,7 +942,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GRAY"
+          "color": "gray",
+          "hex": "#9ca3af"
         }
       ]
     },
@@ -933,7 +957,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-64.jpg"
-        },
+        }
       ]
     },
     "quantity": 5
@@ -961,7 +985,8 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "GRAY"
+          "color": "gray",
+          "hex": "#9ca3af"
         }
       ]
     },
@@ -975,7 +1000,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-67.jpg"
-        },
+        }
       ]
     },
     "quantity": 1
@@ -1006,13 +1031,16 @@ export const products = [
     "colors": {
       "create": [
         {
-          "color": "RED"
+          "color": "red",
+          "hex": "#f87171"
         },
         {
-          "color": "PINK"
+          "color": "pink",
+          "hex": "#f472b6"
         },
         {
-          "color": "GRAY"
+          "color": "gray",
+          "hex": "#9ca3af"
         }
       ]
     },
@@ -1032,7 +1060,7 @@ export const products = [
         },
         {
           "url": "https://karashop.vercel.app/assets/products/product-72.jpg"
-        },
+        }
       ]
     },
     "quantity": 8
