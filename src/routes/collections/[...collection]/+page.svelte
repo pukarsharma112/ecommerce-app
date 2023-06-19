@@ -13,7 +13,7 @@
 
   export let data;
 
-  const cursor = writable(data.nextCursor);
+  $: cursor = writable(data.nextCursor);
   $: products = writable(data.products ?? []);
   $: crumbs = $page.params.category?.split("/");
   $: pageNumber = parseInt($page.url.searchParams.get("page") ?? "1");
