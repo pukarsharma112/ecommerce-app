@@ -158,6 +158,6 @@ export const actions = {
       message: "Checkout completed!"
     });
 
-    return { form };
+    throw redirect(301, "/invoices");
   }
 };

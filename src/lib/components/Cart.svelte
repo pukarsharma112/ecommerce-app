@@ -11,7 +11,7 @@
   export let isModalView = false;
   export let hideDeleteCart = false;
 
-  export let shippingCharge;
+  export let shippingCharge = 0
 
   $: subtotal = userCart.reduce((acc, current) => {
     const quantity = current.quantity;

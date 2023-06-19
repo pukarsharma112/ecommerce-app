@@ -12,6 +12,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
+    "seed-db": "prisma db push --force-reset && prisma db seed",
     "lint": "eslint --fix src/**/*.{js,svelte} --ignore-path .gitignore",
     "format": "prettier -w src/**/*.{js,svelte} --ignore-path .gitignore"
   },

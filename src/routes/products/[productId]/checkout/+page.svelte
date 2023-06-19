@@ -15,7 +15,7 @@
   const { form, enhance, errors } = superForm(data.form, {
     validators: checkoutBillingSchema,
     onSubmit() {
-      total.show({ id: "checkout", type: "loading", message: "Loading..." });
+      toast.show({ id: "checkout", type: "loading", message: "Loading..." });
     }
   });
 

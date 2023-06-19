@@ -43,7 +43,9 @@
 
 <div class="bg-white">
   <div class="px-4 pt-2">
-    <a href={$referer} class="text-primary-500 hover:underline inline-flex items-center">
+    <a
+    on:click|preventDefault={() => history.back()}
+    href={$referer} class="text-primary-500 hover:underline inline-flex items-center">
       <i class="i-heroicons-chevron-left w-5 h-5 mr-1" />
       <span>Back</span>
     </a>
@@ -192,7 +194,7 @@
 
         <!-- Sizes -->
 
-        {#if data.product?.sizes}
+        {#if data.product?.sizes?.length}
           <div class="mt-10">
             <h3 class="text-sm font-medium text-gray-900">Size</h3>
 
